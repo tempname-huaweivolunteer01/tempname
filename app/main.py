@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 
-from Routes import CRUD
+from app.Routes import CRUD
 
 app = FastAPI()
 
 app.include_router(
         router=CRUD.CRUD_ROUTER,
-        prefix="/static_storage",
-        tags=["Static Storage Routes"]
+        prefix="/books",
+        tags=["books"]
         )
 
 @app.get("/")
