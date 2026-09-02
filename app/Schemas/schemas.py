@@ -8,6 +8,12 @@ class CreateBookSchema(BaseModel):
     genre:str
     launch_date:str
 
+class EditBookSchema(BaseModel):
+    name:str|None = None
+    author:str|None = None
+    genre:str|None = None
+    launch_date:str|None = None
+
 class BookResponseSchema(CreateBookSchema):
     id: UUID
     model_config = ConfigDict(from_attributes=True)
