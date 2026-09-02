@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict
 
 class CreateBookSchema(BaseModel):
     name:str
@@ -11,3 +13,7 @@ class EditBookSchema(BaseModel):
     author:str|None = None
     genre:str|None = None
     launch_date:str|None = None
+
+class BookResponseSchema(CreateBookSchema):
+    id: UUID
+    model_config = ConfigDict(from_attributes=True)
