@@ -1,4 +1,6 @@
-from sqlalchemy import String, Uuid
+from datetime import datetime, timezone
+
+from sqlalchemy import DateTime, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 from uuid import UUID, uuid4
 
@@ -11,6 +13,11 @@ class Book(Base):
     author: Mapped[str] = mapped_column(String(100))
     genre: Mapped[str] = mapped_column(String(100))
     launch_date: Mapped[str] = mapped_column(String(100))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False
+    )
 
     def __init__(self,
                  name:str,

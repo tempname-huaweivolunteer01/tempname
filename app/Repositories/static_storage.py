@@ -3,13 +3,14 @@ from typing import List, Optional
 from uuid import UUID
 
 from app.Models.book import Book
+from app.Schemas.schemas import CreateBookSchema
 
 class BookRepository:
     def __init__(self, session: Session):
         self.session = session
 
-    def create_book(self, name: str, author: str, genre: str, launch_date: str):
-        new_book = Book(name, author, genre, launch_date)
+    def create_book(self, book: CreateBookSchema):
+        new_book = Book(**book.model_dump())
         self.session.add(new_book)
         self.session.commit()
         self.session.refresh(new_book)
@@ -19,4 +20,16 @@ class BookRepository:
         return self.session.query(Book).filter(Book.id == book_id).first()
 
     def get_all(self) -> List[Book]:
-        return self.session.query(Book).all()
+        return self.session.query(Book).order_by(Book.created_at.asc()).all()
+
+    def replace_book(self, new_book: CreateBookSchema, book_id: UUID):
+        book = self.get_by_id(book_id)
+        if book is None:
+            return None
+        book.name = new_book.name
+        book.author = new_book.author
+        book.launch_date = new_book.launch_date
+        book.genre = new_book.genre
+        self.session.commit()
+        self.session.refresh(book)
+        return book
