@@ -1,9 +1,10 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from uuid import UUID
 
 from app.Models.book import Book
-from app.Schemas.schemas import CreateBookSchema
+from app.Schemas.schemas import CreateBookSchema, DeleteBookSchema, EditBookSchema
 
 class BookRepository:
     def __init__(self, session: Session):
@@ -33,3 +34,24 @@ class BookRepository:
         self.session.commit()
         self.session.refresh(book)
         return book
+
+    def edit_book(self, new_book: EditBookSchema, book_id: UUID):
+        book = self.get_by_id(book_id)
+        if book is None:
+            return None
+        update_data = new_book.model_dump(exclude_unset=True)
+        if not update_data:
+            raise HTTPException(status_code=404, detail="Nenhum dado válido encontrado")
+        for field, value in update_data.items():
+            setattr(book, field, value)
+        self.session.commit()
+        self.session.refresh(book)
+        return book
+
+    def delete_book(self, book_id: UUID):
+        book = self.get_by_id(book_id)
+        if book is None:
+            return None
+        self.session.delete(book)
+        self.session.commit()
+        return DeleteBookSchema(mensagem=f"Livro {book.name} deletado com sucesso!", uuid=book_id)
