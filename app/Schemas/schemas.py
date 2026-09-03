@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -16,4 +17,9 @@ class EditBookSchema(BaseModel):
 
 class BookResponseSchema(CreateBookSchema):
     id: UUID
+    created_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+class DeleteBookSchema(BaseModel):
+    mensagem: str
+    uuid: UUID
