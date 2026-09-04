@@ -25,5 +25,11 @@ services:
       start_period: 30s
       timeout: 10s
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "${ADMINER_PORT}:8080"
+
 volumes:
   db:
