@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.Schemas.schemas import BookResponseSchema, CreateBookSchema, DeleteBookSchema, EditBookSchema
 from app.database.database import get_session
 
-from app.Models.book import Book
+from app.Models.models import Book
 from app.Repositories.static_storage import BookRepository
 
 CRUD_ROUTER = APIRouter()
