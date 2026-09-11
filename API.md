@@ -11,6 +11,7 @@ gerenciamento de projetos.
 - SQLAlchemy
 - PostgreSQL
 - Docker
+- Zitadel
 - React (frontend)
 
 ### Base URL
