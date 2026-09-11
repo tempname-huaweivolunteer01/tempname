@@ -126,7 +126,6 @@ class TaskAssignee(Base):
 class Tag(Base):
     __tablename__ = "tags"
     id: Mapped[UUID] = mapped_column(Uuid,primary_key=True,default=uuid4)
-    task_id: Mapped[UUID] = mapped_column(Uuid,ForeignKey("tasks.id"),nullable=False)
     task_tags: Mapped[list["TaskTag"]] = relationship(back_populates="tag")
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     color: Mapped[str] = mapped_column(String(100), nullable=False)
