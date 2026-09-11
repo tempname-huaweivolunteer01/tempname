@@ -4,7 +4,7 @@ from sqlalchemy import DateTime, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 from uuid import UUID, uuid4
 
-from app.database.database import Base
+from database.database import Base
 
 class Book(Base):
     __tablename__ = "books"
