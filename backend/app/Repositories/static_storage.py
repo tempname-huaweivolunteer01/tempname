@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from uuid import UUID
 
-from Models.book import Book
+from Models.models import Book
 from Schemas.schemas import CreateBookSchema, DeleteBookSchema, EditBookSchema
 
 class BookRepository:
